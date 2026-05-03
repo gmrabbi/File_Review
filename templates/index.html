@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DUET CSE Carnival 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f1b35;
+    --blue: #2563eb;
+    --blue-light: #3b82f6;
+    --accent: #f59e0b;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --green: #10b981;
+    --green-bg: #ecfdf5;
+    --pending-bg: #fff7ed;
+    --pending: #f97316;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--navy);
+    padding: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    box-shadow: 0 1px 12px rgba(0,0,0,0.18);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-icon {
+    width: 36px; height: 36px;
+    background: var(--blue);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .brand-icon svg { width: 20px; height: 20px; color: white; }
+
+  .brand-text h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: white;
+    line-height: 1.2;
+  }
+
+  .brand-text p {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .stats-bar {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: white;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e3a8a 100%);
+    padding: 3.5rem 2.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.15);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 30%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.08);
+  }
+
+  .hero-inner {
+    max-width: 680px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(37,99,235,0.3);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.75rem;
+    color: #93c5fd;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .hero h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero h2 em {
+    font-style: italic;
+    color: #fbbf24;
+  }
+
+  .hero p {
+    color: #94a3b8;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .progress-bar-wrap {
+    margin-top: 1.5rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    height: 8px;
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--accent));
+    border-radius: 20px;
+    transition: width 0.8s ease;
+  }
+
+  .progress-label {
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: #94a3b8;
+  }
+
+  .upload-card {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.3rem;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    margin-bottom: 1.75rem;
+    max-width: 780px;
+  }
+
+  .upload-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--navy);
+  }
+
+  .upload-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .upload-controls input[type="file"] {
+    flex: 1 1 240px;
+    padding: 0.8rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    background: white;
+    color: var(--text);
+  }
+
+  .btn-upload {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: var(--blue);
+    color: white;
+    border-radius: 12px;
+    padding: 0.85rem 1.3rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s ease;
+  }
+
+  .btn-upload:hover {
+    background: var(--blue-light);
+  }
+
+  .upload-note {
+    margin-top: 0.85rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .upload-status {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .upload-status.success { color: #16a34a; }
+  .upload-status.error { color: #dc2626; }
+
+  .toast {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    min-width: 260px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 12px 36px rgba(15, 23, 42, 0.18);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 200;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .toast.success {
+    background: #166534;
+  }
+
+  .toast.error {
+    background: #991b1b;
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-header h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: var(--navy);
+  }
+
+  .filter-tabs {
+    display: flex;
+    gap: 6px;
+  }
+
+  .filter-tab {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: white;
+    font-size: 0.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .filter-tab.active, .filter-tab:hover {
+    background: var(--navy);
+    color: white;
+    border-color: var(--navy);
+  }
+
+  .papers-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .paper-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem 1.75rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .paper-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--border);
+    border-radius: 4px 0 0 4px;
+    transition: background 0.2s;
+  }
+
+  .paper-card:hover {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    border-color: #c7d2fe;
+    transform: translateY(-1px);
+  }
+
+  .paper-card:hover::before {
+    background: var(--blue);
+  }
+
+  .paper-card.reviewed::before {
+    background: var(--green);
+  }
+
+  .paper-id {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .paper-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .paper-authors {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .paper-abstract {
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .paper-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .keyword-tag {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 2px 10px;
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+
+  .paper-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    min-width: 160px;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .status-badge.done {
+    background: var(--green-bg);
+    color: var(--green);
+  }
+
+  .status-badge.pending {
+    background: var(--pending-bg);
+    color: var(--pending);
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .btn-review {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--blue);
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-review:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37,99,235,0.35);
+  }
+
+  .btn-review.secondary {
+    background: var(--green);
+  }
+
+  .btn-review.secondary:hover {
+    background: #059669;
+    box-shadow: 0 4px 12px rgba(16,185,129,0.35);
+  }
+
+  .paper-size {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem;
+    color: var(--muted);
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <h1>DUET CSE Carnival 2026</h1>
+      <p>Project Showcasing Event</p>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num">{{ total_count }}</div>
+      <div class="stat-label">Projects</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">{{ reviewed_count }}</div>
+      <div class="stat-label">Reviewed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">{{ total_count - reviewed_count }}</div>
+      <div class="stat-label">Pending</div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+      DUET CSE Carnival 2026
+    </div>
+    <h2>Project<br><em>Showcasing Event</em></h2>
+    <p>Welcome, Reviewer. Please evaluate the assigned projects below. Click "Begin Review" to open a project alongside the review form.</p>
+    {% if total_count > 0 %}
+    <div class="progress-bar-wrap">
+      <div class="progress-fill" style="width: {{ (reviewed_count / total_count * 100)|round }}%"></div>
+    </div>
+    <p class="progress-label">{{ reviewed_count }} of {{ total_count }} reviews completed ({{ (reviewed_count / total_count * 100)|round }}%)</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="upload-card">
+  <h3>Upload new PDFs for review</h3>
+  <div class="upload-controls">
+    <input type="file" id="paperUpload" accept="application/pdf" multiple>
+    <button class="btn-upload" type="button" onclick="uploadPaper()">Upload PDFs</button>
+  </div>
+  <p class="upload-note">Upload one or more PDF files at a time. The files will be saved into the server's papers directory and appear in the project list.</p>
+  <div class="upload-status" id="uploadStatus"></div>
+</div>
+
+<main>
+  <div class="section-header">
+    <h3>Assigned Projects</h3>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterPapers('all', this)">All ({{ total_count }})</button>
+      <button class="filter-tab" onclick="filterPapers('pending', this)">Pending ({{ total_count - reviewed_count }})</button>
+      <button class="filter-tab" onclick="filterPapers('reviewed', this)">Reviewed ({{ reviewed_count }})</button>
+    </div>
+  </div>
+
+  <div class="papers-grid" id="papersGrid">
+    {% if papers %}
+      {% for paper in papers %}
+      <div class="paper-card {{ 'reviewed' if paper.reviewed else '' }}" data-status="{{ 'reviewed' if paper.reviewed else 'pending' }}">
+        <div class="paper-info">
+          <div class="paper-id">{{ paper.filename.replace('.pdf','') }}</div>
+          <div class="paper-title">{{ paper.title }}</div>
+          <div class="paper-authors">{{ paper.authors }}</div>
+          {% if paper.abstract %}
+          <div class="paper-abstract">{{ paper.abstract }}</div>
+          {% endif %}
+          {% if paper.keywords %}
+          <div class="paper-keywords">
+            {% for kw in paper.keywords %}
+            <span class="keyword-tag">{{ kw }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        <div class="paper-actions">
+          {% if paper.reviewed %}
+            <span class="status-badge done">
+              <span class="status-dot"></span> Reviewed
+            </span>
+            {% if paper.reviewed_filename %}
+            <a href="/download/{{ paper.reviewed_filename }}" class="btn-review secondary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download
+            </a>
+            {% else %}
+            <span class="paper-size">Review file unavailable</span>
+            {% endif %}
+            <a href="/review/{{ paper.filename }}" class="btn-review" style="background:#6b7280;">
+              Re-Review
+            </a>
+            <button class="btn-review" style="background:#dc2626;" onclick="deletePaper('{{ paper.filename }}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+              Delete
+            </button>
+          {% else %}
+            <span class="status-badge pending">
+              <span class="status-dot"></span> Pending
+            </span>
+            <span class="paper-size">{{ "%.1f"|format(paper.size/1024) }} KB</span>
+            <a href="/review/{{ paper.filename }}" class="btn-review">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/><path d="M17.5 2.5a2.121 2.121 0 013 3L12 14l-4 1 1-4 7.5-7.5z"/></svg>
+              Begin Review
+            </a>
+            <button class="btn-review" style="background:#dc2626;" onclick="deletePaper('{{ paper.filename }}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+              Delete
+            </button>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">
+        <p>No projects found in the papers directory.</p>
+      </div>
+    {% endif %}
+  </div>
+</main>
+
+<footer>
+  DUET CSE Carnival 2026 &mdash; Project Showcasing Event &mdash; {{ total_count }} projects loaded from <code>/papers</code>
+</footer>
+
+<script>
+function filterPapers(status, btn) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.paper-card').forEach(card => {
+    if (status === 'all' || card.dataset.status === status) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+async function uploadPaper() {
+  const input = document.getElementById('paperUpload');
+  const status = document.getElementById('uploadStatus');
+  status.textContent = '';
+  status.className = 'upload-status';
+
+  if (!input.files.length) {
+    status.textContent = 'Please choose PDF files to upload.';
+    status.classList.add('error');
+    return;
+  }
+
+  const formData = new FormData();
+  for (let file of input.files) {
+    formData.append('paper', file);
+  }
+
+  try {
+    const res = await fetch('/upload_paper', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+
+    if (!data.success) {
+      status.textContent = data.error || 'Upload failed.';
+      status.classList.add('error');
+      return;
+    }
+
+    status.textContent = data.message;
+    status.classList.add('success');
+    input.value = '';
+    setTimeout(() => window.location.reload(), 900);
+  } catch (err) {
+    status.textContent = 'Upload failed. Please try again.';
+    status.classList.add('error');
+  }
+}
+
+function showToast(message, type = 'success') {
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = message;
+  toast.className = `toast ${type} show`;
+
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3600);
+}
+
+async function deletePaper(filename) {
+  if (!confirm(`Are you sure you want to delete "${filename}"? This action cannot be undone.`)) {
+    return;
+  }
+
+  try {
+    const res = await fetch(`/delete_paper/${filename}`, {
+      method: 'DELETE'
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      showToast('Paper deleted successfully.', 'success');
+      setTimeout(() => window.location.reload(), 900);
+    } else {
+      showToast('Delete failed: ' + data.error, 'error');
+    }
+  } catch (err) {
+    showToast('Delete failed. Please try again.', 'error');
+  }
+}
+</script>
+</body>
+</html>
