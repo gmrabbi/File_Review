@@ -640,20 +640,6 @@
           <textarea id="summary" rows="4" placeholder="Briefly describe what the paper is about and its main contributions..."></textarea>
         </div>
 
-        <div class="form-field">
-          <label>Strengths</label>
-          <textarea id="strengths" rows="3" placeholder="List the main strengths of the paper..."></textarea>
-        </div>
-
-        <div class="form-field">
-          <label>Weaknesses</label>
-          <textarea id="weaknesses" rows="3" placeholder="List the main weaknesses or limitations..."></textarea>
-        </div>
-
-        <div class="form-field">
-          <label>Detailed Comments to Authors</label>
-          <textarea id="comments" rows="5" placeholder="Provide specific, constructive feedback for the authors. Reference specific sections or page numbers where applicable..."></textarea>
-        </div>
 
       </form>
     </div>
@@ -744,9 +730,6 @@ async function submitReview() {
     reviewer_email: document.getElementById('reviewerEmail').value.trim(),
     overall_score: document.getElementById('overallScore').value,
     summary,
-    strengths: document.getElementById('strengths').value.trim(),
-    weaknesses: document.getElementById('weaknesses').value.trim(),
-    comments: document.getElementById('comments').value.trim(),
     recommendation: rec.value,
   };
 

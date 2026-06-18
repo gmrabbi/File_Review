@@ -122,9 +122,6 @@ def submit_review():
     reviewer_email = data.get("reviewer_email", "")
     overall_score = data.get("overall_score", "")
     summary = data.get("summary", "")
-    strengths = data.get("strengths", "")
-    weaknesses = data.get("weaknesses", "")
-    comments = data.get("comments", "")
     recommendation = data.get("recommendation", "")
 
     if not filename or not summary:
@@ -201,17 +198,6 @@ def submit_review():
     story.append(Paragraph("REVIEW SUMMARY", heading_style))
     story.append(Paragraph(summary, body_style))
 
-    if strengths:
-        story.append(Paragraph("STRENGTHS", heading_style))
-        story.append(Paragraph(strengths, body_style))
-
-    if weaknesses:
-        story.append(Paragraph("WEAKNESSES", heading_style))
-        story.append(Paragraph(weaknesses, body_style))
-
-    if comments:
-        story.append(Paragraph("DETAILED COMMENTS TO AUTHORS", heading_style))
-        story.append(Paragraph(comments, body_style))
 
     doc.build(story)
     review_buffer.seek(0)
